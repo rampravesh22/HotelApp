@@ -15,14 +15,15 @@ class BaseModel(models.Model):
 
 class Amenities(BaseModel):
     amenity_name = models.CharField(max_length=100)
-
+    def __str__(self) -> str:
+        return self.amenity_name
 
 class Hotel(BaseModel):
     amenities = models.ManyToManyField(Amenities)
     hotel_name = models.CharField(max_length=100)
     hotel_price = models.FloatField()
     description = models.TextField()
-    root_count = models.IntegerField(default=10)
+    room_count = models.IntegerField(default=10)
 
 
 class HotelImages(BaseModel):
