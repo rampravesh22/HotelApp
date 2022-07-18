@@ -19,7 +19,7 @@ class Amenities(BaseModel):
         return self.amenity_name
 
 class Hotel(BaseModel):
-    amenities = models.ManyToManyField(Amenities)
+    amenities = models.ManyToManyField(Amenities,related_name="Amenities")
     hotel_name = models.CharField(max_length=100)
     hotel_price = models.FloatField()
     description = models.TextField()
@@ -36,7 +36,7 @@ class HotelBooking(BaseModel):
     hotel = models.ForeignKey(
         Hotel, related_name="hotel_booking", on_delete=models.CASCADE)
     user = models.ForeignKey(
-        User, related_name="user_booking", on_delete=models.CASCADE)
+        User, related_name="user", on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     booking_type = models.CharField(max_length=100,
