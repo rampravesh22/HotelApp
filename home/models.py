@@ -34,6 +34,8 @@ class HotelImages(BaseModel):
     hotel = models.ForeignKey(
         Hotel, related_name="hotel_images", on_delete=models.CASCADE)
     images = models.ImageField(upload_to="hotel")
+    name= models.CharField(max_length=100,default="")
+    
 
 
 class HotelBooking(BaseModel):

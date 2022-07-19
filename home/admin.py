@@ -15,7 +15,7 @@ class HotelBookingAdmin(admin.ModelAdmin):
 
 @admin.register(HotelImages)
 class HotelImagesAdmin(admin.ModelAdmin):
-    list_display = ['images']
+    list_display = ['name','images',]
 
 @admin.register(Amenities)
 class AmenitiesAdmin(admin.ModelAdmin):
