@@ -1,3 +1,4 @@
+from audioop import reverse
 from django.db import models
 import uuid
 from django.contrib.auth.models import User
@@ -24,6 +25,9 @@ class Hotel(BaseModel):
     hotel_price = models.FloatField()
     description = models.TextField()
     room_count = models.IntegerField(default=10)
+    
+    def __str__(self) -> str:
+        return self.hotel_name
 
 
 class HotelImages(BaseModel):
@@ -41,3 +45,4 @@ class HotelBooking(BaseModel):
     end_date = models.DateField()
     booking_type = models.CharField(max_length=100,
         choices=(("Pre paid", 'prepaid'), ("Post paid", 'postpaid')))
+
