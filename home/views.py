@@ -33,7 +33,8 @@ def home(request):
     context = {
         'amenities_obj': amenities_obj,
         "hotel_obj": hotel_obj,
-        'sort_by': sort_by
+        'sort_by': sort_by,
+        'search': search
 
     }
     return render(request, "home/home.html", context)

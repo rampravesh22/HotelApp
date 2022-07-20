@@ -1,8 +1,9 @@
 $(document).ready(function () {
-    $(document).on('submit', '#newsletter_form', function (e) {
+    $(document).on('click', '#btn', function (e) {
         e.preventDefault();
-        const name = $('#newsletter_input_name').val();
-        const email = $('#newsletter_input_email').val();
+        const name = $('#name_id').val();
+        const email = $('#email_id').val();
+
         $.ajax({
             type: 'POST',
             url: 'getemail/',
@@ -12,7 +13,7 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success: function () {
-                cosole.log()
+                cosole.log("Data saved successfully")
             },
         });
     });
