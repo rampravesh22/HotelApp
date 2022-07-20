@@ -50,73 +50,51 @@
                     animi.
                 </span>
             </div>
-            <form action="#">
-                <div class="row d-flex flex-row justify-content-between">
-                    <h3 class="text-white">Find Hotels</h3>
-                    <div class="form-card col-md-3">
-                        <div class="form-inline">
-                        <label for="search">Search</label>
-                        <input type="text" id="search" name="search" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-card">
-                        <div class="form-inline">
-                            <label for="destination">Destination</label>
-                            <input type="text" name="destination" id="destination" class="form-control">
 
-                        </div>
-                    </div>
-                    <div class="col-md-3 form-card">
-                        <div class="form-inline">
-                            <label for="activities">Amenities</label>
-                            <select name="#" id="amenities" class="form-control" multiple>
-                                <option value="">Choose</option>
-
-                                {% for amenity in  amenities_obj %}
-                                <option value="">{{amenity.amenity_name}}</option>
-                                {% endfor %}
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3 my-3">
-
-                        <input type="submit" class="btn btn-primary btn-block" value="Find">
-
-                    </div>
-                </div>
-            </form>
         </div>
-    </div>
-    </div>
     </div>
 </section>
 
 <section class="search-container">
     <div class="container">
         <div class="row">
-                    <form action="#">
+            <form action="#">
                 <div class="row d-flex flex-row justify-content-between">
                     <h3 class="text-white">Find Hotels</h3>
-                    <div class="form-card col-md-3">
+
+                    <div class="form-card col-md-3 mb-3 pb-4">
                         <div class="form-inline">
-                        <label for="search">Search</label>
-                        <input type="text" id="search" name="search" class="form-control">
+                            <label for="search">Sort By Price</label>
+                            <select class="form-select mt-2" name="sort-by" aria-label="Default select example">
+                                <option selected value="">Recommended</option>
+
+                                <option value="asc" {% if sort_by == "asc" %}selected{% endif %}>Low to High</option>
+                                <option value="desc" {% if sort_by == "desc" %}selected{% endif %}>High to Low</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-card col-md-3 mb-3 pb-4 ">
+                        <div class="form-inline">
+                            <label for="search">Search</label>
+                            <input type="text" name="search" id="search" class="form-control mt-2"
+                                placeholder="Search by hotel name">
                         </div>
                     </div>
-                    <div class="col-md-3 form-card">
+
+                    <div class="col-md-3 form-card mb-3 pb-4 ">
                         <div class="form-inline">
                             <label for="destination">Destination</label>
-                            <input type="text" name="destination" id="destination" class="form-control">
-
+                            <input type="text" name="destination" id="destination" class="form-control mt-2">
                         </div>
                     </div>
-                    <div class="col-md-3 form-card">
-                        <div class="form-inline">
-                            <label for="activities">Amenities</label>
-                            <select name="#" id="amenities" class="form-control" multiple>
-                                <option value="">Choose</option>
 
+                    <div class="col-md-3 form-card pb-4">
+                        <div class="form-inline">
+                            <label for="amenities">Amenities</label>
+                            <select name="amenity" id="amenities" class="form-control mt-2" multiple>
+                                <option value="">Choose</option>
                                 {% for amenity in  amenities_obj %}
                                 <option value="">{{amenity.amenity_name}}</option>
                                 {% endfor %}
@@ -124,21 +102,16 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-3 my-3">
-
                         <input type="submit" class="btn btn-primary btn-block" value="Find">
-
                     </div>
                 </div>
             </form>
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <div class="row my-3">
-                    <div class="col-sm-12 map-container-btn text-center">
-                        <input name="map" id="" class="btn btn-outline-secondary map-btn" type="button" value="map">
-                    </div>
-                </div>
+
                 <div class="row mt-2 justify-content-between">
                     <div class="filter-card">
                         <h5>Filter</h5>
@@ -185,15 +158,14 @@
                             <b>123</b> out of 1987</p>
                     </div>
                     <div class="col-md-6">
+
                         <div class="form-inline">
-                            <label class="m-4" for="exampleFormControlSelect1">Sort by</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>Recommended</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            <label class="m-4" for="exampleFormControlSelect1"><strong>Sort by Price: </strong>
+
+                                {{sort_by|upper}}
+
+                            </label>
+
                         </div>
 
                     </div>

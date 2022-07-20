@@ -4,16 +4,38 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from home.models import Hotel, HotelBooking, HotelImages, Amenities
 from django.contrib.auth.decorators import login_required
-from .models import Hotel,HotelBooking,Amenities,HotelImages
+from .models import Hotel, HotelBooking, Amenities, HotelImages
+from django.db.models import Q
 # Create your views here.
+
+
 def home(request):
     amenities_obj = Amenities.objects.all()
     hotel_obj = Hotel.objects.all()
-    context ={
-        'amenities_obj':amenities_obj,
-        "hotel_obj":hotel_obj
+    sort_by = request.GET.get('sort-by')
+    search = request.GET.get('search')
+    print(search)
+    if sort_by:
+        if sort_by == "asc":
+            hotel_obj = hotel_obj.order_by('hotel_price')
+            asc = "selected"
+            desc = ""
+        elif sort_by == "desc":
+            hotel_obj = hotel_obj.order_by('-hotel_price')
+            desc = 'selected'
+            asc = ""
+    if search:
+        hotel_obj = hotel_obj.filter(hotel_name__icontains=search)
+        for hotel in hotel_obj:
+            print(hotel.hotel_name)
+
+    context = {
+        'amenities_obj': amenities_obj,
+        "hotel_obj": hotel_obj,
+        'sort_by': sort_by
+
     }
-    return render(request, "home/home.html",context)
+    return render(request, "home/home.html", context)
 
 
 def login_page(request):
@@ -24,9 +46,9 @@ def login_page(request):
         if not user_obj.exists():
             messages.warning(request, 'Account not found.')
             return redirect('/login/')
-        user_log = authenticate(request,username=email, password=password)
+        user_log = authenticate(request, username=email, password=password)
         if not user_log:
-            messages.warning(request, 'Inavlid username or password.')
+            messages.warning(request, 'In-valid username or password.')
             return redirect('/login/')
         login(request, user_log)
         return redirect('/')
@@ -45,9 +67,11 @@ def register_page(request):
         user.username = email
         user.set_password(password)
         user.save()
-        messages.success(request, "Congratulations!! You have registered successfully.")
+        messages.success(
+            request, "Congratulations!! You have registered successfully.")
         return redirect("/login/")
     return render(request, "home/register.html", {})
+
 
 print("*****************************************************")
 
