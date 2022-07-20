@@ -175,7 +175,9 @@
                 {% for hotel in hotel_obj %}
                 <div class="row search-card-result">
                     <div class="col-md-3">
-                        <img class="img-fluid" src="{{hotel.hotel_images.first.images.url}}" alt="Card image cap">
+                        <a href="{% url 'hoteldetail' hotel.uid %}">
+                            <img class="img-fluid" src="{{hotel.hotel_images.first.images.url}}" alt="Card image cap">
+                        </a>
                     </div>
                     <div class="col-md-5">
                         <h5>{{hotel.hotel_name}}</h5>

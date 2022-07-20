@@ -31,9 +31,6 @@ def home(request):
     if len(amenities):
         hotel_obj = hotel_obj.filter(
             amenities__amenity_name__in=amenities).distinct()
-    print("*****************************************************")
-    print(amenities)
-    print("*****************************************************")
     context = {
         'amenities_obj': amenities_obj,
         "hotel_obj": hotel_obj,
@@ -78,3 +75,32 @@ def register_page(request):
             request, "Congratulations!! You have registered successfully.")
         return redirect("/login/")
     return render(request, "home/register.html", {})
+
+
+def check_booking(start_date, end_date, uid, room_count):
+    qs = HotelBooking.objects.filter(
+        start_date__lte=start_date, end_date__gte=end_date)
+    hotel__uid = uid
+    if len(qs) > room_count:
+        return False
+    return True
+
+
+def hotel_detail(request, uid):
+    hotel_object = Hotel.objects.get(uid=uid)
+    if request.method == "POST":
+        checkin = request.POST.get('checkin')
+        checout = request.POST.get('checkout')
+        hotel = Hotel.objects.get(uid=uid)
+        if check_booking(checkin, checout, uid, hotel.room_count):
+            messages.warning(request, "Hotel is already booked")
+            return redirect(request.META.get('HTTP_REFERER'))
+        HotelBooking.objects.create(
+            hotel=hotel, user=request.user, start_date=checkin, end_date=checout, booking_type="Prepaid")
+        messages.warning(request, "Your booking has been completed")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    context = {
+        "hotels_obj": hotel_object
+    }
+    return render(request, "home/hotel_detail.html", context)
