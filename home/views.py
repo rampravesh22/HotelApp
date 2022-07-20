@@ -25,7 +25,8 @@ def home(request):
             desc = 'selected'
             asc = ""
     if search:
-        hotel_obj = hotel_obj.filter(hotel_name__icontains=search)
+        hotel_obj = hotel_obj.filter(
+            Q(hotel_name__icontains=search) | Q(description=search))
         for hotel in hotel_obj:
             print(hotel.hotel_name)
 
