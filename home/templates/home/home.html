@@ -50,39 +50,44 @@
                     animi.
                 </span>
             </div>
-            <div class="col-md-4">
-                <div class=" form-card">
-                    <h3>Find Hotels</h3>
-                    <form action="#">
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <label for="destination">Destination</label>
-                                <input type="text" name="destination" id="destination" class="form-control">
-
-                            </div>
+            <form action="#">
+                <div class="row d-flex flex-row justify-content-between">
+                    <h3 class="text-white">Find Hotels</h3>
+                    <div class="form-card col-md-3">
+                        <div class="form-inline">
+                        <label for="search">Search</label>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <label for="activities">Amenities</label>
-                                <select name="#" id="amenities" class="form-control" multiple>
-                                    <option value="">Choose</option>
+                    </div>
+                    <div class="col-md-3 form-card">
+                        <div class="form-inline">
+                            <label for="destination">Destination</label>
+                            <input type="text" name="destination" id="destination" class="form-control">
 
-                                    {% for amenity in  amenities_obj %}
-                                    <option value="">{{amenity.amenity_name}}</option>
-                                    {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-3 form-card">
+                        <div class="form-inline">
+                            <label for="activities">Amenities</label>
+                            <select name="#" id="amenities" class="form-control" multiple>
+                                <option value="">Choose</option>
 
-                                </select>
-                            </div>
+                                {% for amenity in  amenities_obj %}
+                                <option value="">{{amenity.amenity_name}}</option>
+                                {% endfor %}
+
+                            </select>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-12 my-3">
-                                <input type="submit" class="btn btn-primary btn-block" value="Find">
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="col-md-3 my-3">
+
+                        <input type="submit" class="btn btn-primary btn-block" value="Find">
+
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
+    </div>
+    </div>
     </div>
 </section>
 
@@ -159,52 +164,41 @@
                 {% for hotel in hotel_obj %}
                 <div class="row search-card-result">
                     <div class="col-md-3">
-                        <h1>{{  }}</h1>
                         <img class="img-fluid" src="{{hotel.hotel_images.first.images.url}}" alt="Card image cap">
                     </div>
                     <div class="col-md-5">
-                        <h5>Choose The Best Plan For You</h5>
+                        <h5>{{hotel.hotel_name}}</h5>
                         <div class="review">
-
-                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked "></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star checked"></span>
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
                         </div>
-                        <p>Join over 1 Million of users. Dignissimos asperiores vitae velit veniam</p>
+                        <p>{{ hotel.description|truncatewords:2 }}</p>
                         <p>
-                            <span class="badge badge-primary">8.5</span> Excellent (2323 reviews)</p>
-                        <p>
-                            <i class="fa fa-bath"></i>
-                            <i class="fa fa-phone"></i>
-                            <i class="fa fa-wifi"></i>
-                            <i class="fa fa-tv"></i>
+
+                            <h4>Amenities</h4>
+                            {% for amenity in hotel.amenities.all %}
+                            <strong>{{amenity.amenity_name}}</strong>,
+                            {% endfor %}
+
                         </p>
+
                     </div>
-                    <div class="col-md-2 border-left text-center more-offers">
-                        <p>place.com</p>
-                        <p>
-                            <s>£123</s>
-                        </p>
-                        <p>Place.com</p>
-                        <p>£65</p>
-                        <p class="border-top additional">More Deals from £65</p>
-                    </div>
+
                     <div class="col-md-2 border-left text-center more-offers">
                         <h4>
                             <span class="badge badge-success">Top Deal</span>
                         </h4>
                         <div class="text-warning">
                             <p>place.com</p>
-                            <p>
-                                <s>£123</s>
-                            </p>
-
                         </div>
                         <div class="text-success">
-                            <p>Place.com</p>
-                            <h5>£65</h5>
+                            <p>Room Count</p>
+                            <h5><span></span>{{hotel.room_count}}</h5>
+                            <p>Price</p>
+                            <h5><span>₹</span>{{hotel.hotel_price}}</h5>
                         </div>
 
                         <div class="btn btn-success">View deal ></div>

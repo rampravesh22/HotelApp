@@ -20,7 +20,7 @@ class Amenities(BaseModel):
         return self.amenity_name
 
 class Hotel(BaseModel):
-    amenities = models.ManyToManyField(Amenities,related_name="Amenities")
+    amenities = models.ManyToManyField(Amenities,related_name="hotel_amenities")
     hotel_name = models.CharField(max_length=100)
     hotel_price = models.FloatField()
     description = models.TextField()

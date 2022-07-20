@@ -50,10 +50,5 @@ def register_page(request):
     return render(request, "home/register.html", {})
 
 print("*****************************************************")
-amenities_obj = Amenities.objects.all()
-hotel_obj = Hotel.objects.all()
-h1 = hotel_obj[3]
-img = h1.hotel_images.all()
-for hotel in img:
-    print(hotel.name,hotel.images)
+
 print("*****************************************************")
