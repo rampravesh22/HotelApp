@@ -14,7 +14,6 @@ def home(request):
     hotel_obj = Hotel.objects.all()
     sort_by = request.GET.get('sort-by')
     search = request.GET.get('search')
-    print(search)
     if sort_by:
         if sort_by == "asc":
             hotel_obj = hotel_obj.order_by('hotel_price')
@@ -27,14 +26,20 @@ def home(request):
     if search:
         hotel_obj = hotel_obj.filter(
             Q(hotel_name__icontains=search) | Q(description=search))
-        for hotel in hotel_obj:
-            print(hotel.hotel_name)
 
+    amenities = request.GET.getlist('amenity')
+    if len(amenities):
+        hotel_obj = hotel_obj.filter(
+            amenities__amenity_name__in=amenities).distinct()
+    print("*****************************************************")
+    print(amenities)
+    print("*****************************************************")
     context = {
         'amenities_obj': amenities_obj,
         "hotel_obj": hotel_obj,
         'sort_by': sort_by,
-        'search': search
+        'search': search,
+        'amenities': amenities
 
     }
     return render(request, "home/home.html", context)
@@ -73,8 +78,3 @@ def register_page(request):
             request, "Congratulations!! You have registered successfully.")
         return redirect("/login/")
     return render(request, "home/register.html", {})
-
-
-print("*****************************************************")
-
-print("*****************************************************")

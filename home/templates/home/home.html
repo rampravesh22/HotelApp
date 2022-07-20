@@ -67,7 +67,6 @@
                             <label for="search">Sort By Price</label>
                             <select class="form-select mt-2" name="sort-by" aria-label="Default select example">
                                 <option selected value="">Recommended</option>
-
                                 <option value="asc" {% if sort_by == "asc" %}selected{% endif %}>Low to High</option>
                                 <option value="desc" {% if sort_by == "desc" %}selected{% endif %}>High to Low</option>
                             </select>
@@ -79,7 +78,7 @@
                         <div class="form-inline">
                             <label for="search">Search</label>
                             <input type="text" name="search" id="search" class="form-control mt-2"
-                                placeholder="Search by hotel name">
+                                placeholder="Search by hotel name" value={{ search }}>
                         </div>
                     </div>
 
@@ -91,12 +90,12 @@
                     </div>
 
                     <div class="col-md-3 form-card pb-4">
-                        <div class="form-inline">
+                        <div class="form-inline amenities">
                             <label for="amenities">Amenities</label>
                             <select name="amenity" id="amenities" class="form-control mt-2" multiple>
-                                <option value="">Choose</option>
-                                {% for amenity in  amenities_obj %}
-                                <option value="">{{amenity.amenity_name}}</option>
+                                {% for amenity in amenities_obj %}
+                                <option {% if amenity.amenity_name in amenities %}selected {% endif %}
+                                    value="{{amenity.amenity_name}}">{{amenity.amenity_name}}</option>
                                 {% endfor %}
 
                             </select>
@@ -105,6 +104,7 @@
 
                     <div class="col-md-3 my-3">
                         <input type="submit" class="btn btn-primary btn-block" value="Find">
+                        <input type="reset" value="Reset" class="btn btn-primary btn-block">
                     </div>
                 </div>
             </form>

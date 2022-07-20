@@ -465,3 +465,22 @@ h3 {
     background: #1e3c72;
     cursor: pointer;
 }
+
+select option {
+    border: 1px solid black;
+    margin-top: 4px;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+
+.form-inline input:focus {
+    box-shadow: none;
+    outline: none;
+    /* border: none; */
+}
+
+.amenities select option[selected] {
+    background-color: rgb(96, 255, 159);
+
+}
