@@ -7,11 +7,12 @@
 
             <a href="/hotel-detail/{{hotels_obj.uid}}">
                 <img class="img-fluid" src="{{hotels_obj.hotel_images.first.images.url}}" alt="Card image cap">
-            </a></div>
+            </a>
+
+        </div>
 
         <div class="col-md-5">
             <h5>{{hotels_obj.hotel_name}}</h5>
-
             <p>
                 {{hotels_obj.description|truncatechars:150}}
             </p>
@@ -20,7 +21,6 @@
                 <b>{{amenitie.amenity_name}}</b>,
                 {% endfor %}
             </p>
-
         </div>
         <div class="col-md-2 border-left text-center more-offers">
 
@@ -28,6 +28,7 @@
             <p>${{hotels_obj.hotel_price}}</p>
             <p>Room count</p>
             <p>{{hotels_obj.room_count}}</p>
+            {{ hotel.objecs }}
         </div>
         <div class="col-md-2 border-left text-center more-offers">
 
@@ -45,7 +46,7 @@
     {% if request.user.is_authenticated %}
     <div class="filter-card">
         <h5>Book Hotel</h5>
-        {%include "home/messages.html"%}
+        {% include "home/messages.html" %}
         <form method="post">
             {% csrf_token %}
             <div class="row form-group">
