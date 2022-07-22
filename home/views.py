@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Hotel, HotelBooking, Amenities, HotelImages
 from django.db.models import Q
 # Create your views here.
+print("**********************************************************")
 
 
 def home(request):
@@ -90,21 +91,26 @@ def hotel_detail(request, uid):
     if request.method == "POST":
         checkin = request.POST.get('checkin')
         checkout = request.POST.get('checkout')
-        print("********************************************")
+        print("*********************************************************")
         print(checkin)
+        print(type(checkin))
         print(checkout)
-        print("********************************************")
+        print("*********************************************************")
         hotel = Hotel.objects.get(uid=uid)
         if check_booking(checkin, checkout, uid, hotel.room_count):
             messages.warning(
                 request, "Sorry, No room is available in between thsese dates!")
             return redirect(request.META.get('HTTP_REFERER'))
-        HotelBooking.objects.create(
+        s = HotelBooking.objects.create(
             hotel=hotel, user=request.user, start_date=checkin, end_date=checkout, booking_type="Prepaid")
-        messages.warning(request, "Your booking has been completed")
+        print(s)
+        messages.success(request, "Your booking has been completed")
         return redirect(request.META.get('HTTP_REFERER'))
 
     context = {
         "hotels_obj": hotel_object
     }
     return render(request, "home/hotel_detail.html", context)
+
+
+print("**********************************************************")

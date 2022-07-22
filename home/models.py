@@ -42,11 +42,15 @@ class HotelImages(BaseModel):
 
 
 class HotelBooking(BaseModel):
+    booking_type_choice = (
+        ("Pre Paid", 'Prepaid'),
+        ("Post Paid", 'Postpaid')
+    )
     hotel = models.ForeignKey(
         Hotel, related_name="hotel_booking", on_delete=models.CASCADE)
     user = models.ForeignKey(
         User, related_name="user", on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
-    booking_type = models.CharField(max_length=100,
-                                    choices=(("Pre paid", 'prepaid'), ("Post paid", 'postpaid')))
+    booking_type = models.CharField(
+        max_length=100, choices=booking_type_choice)
