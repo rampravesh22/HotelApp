@@ -81,7 +81,9 @@ def register_page(request):
 def check_booking(start_date, end_date, uid, room_count):
     qs = HotelBooking.objects.filter(
         start_date__lte=start_date, end_date__gte=end_date, hotel__uid=uid)
-    if len(qs) > room_count:
+    print(qs.values())
+    print(len(qs))
+    if len(qs) >= room_count:
         return False
     return True
 
@@ -92,18 +94,19 @@ def hotel_detail(request, uid):
         checkin = request.POST.get('checkin')
         checkout = request.POST.get('checkout')
         print("*********************************************************")
-        print(checkin)
-        print(type(checkin))
-        print(checkout)
         print("*********************************************************")
         hotel = Hotel.objects.get(uid=uid)
-        if check_booking(checkin, checkout, uid, hotel.room_count):
+
+        if not check_booking(checkin, checkout, uid, hotel.room_count):
             messages.warning(
                 request, "Sorry, No room is available in between thsese dates!")
             return redirect(request.META.get('HTTP_REFERER'))
-        s = HotelBooking.objects.create(
+        s = HotelBooking(
             hotel=hotel, user=request.user, start_date=checkin, end_date=checkout, booking_type="Prepaid")
-        print(s)
+        if s.start_date > s.end_date:
+            messages.warning(request, "Please select proper date")
+            return redirect(request.META.get('HTTP_REFERER'))
+        s.save()
         messages.success(request, "Your booking has been completed")
         return redirect(request.META.get('HTTP_REFERER'))
 
