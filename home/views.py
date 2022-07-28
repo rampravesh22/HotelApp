@@ -93,19 +93,23 @@ def hotel_detail(request, uid):
     if request.method == "POST":
         checkin = request.POST.get('checkin')
         checkout = request.POST.get('checkout')
-        print("*********************************************************")
-        print("*********************************************************")
+        if checkin > checkout:
+            messages.warning(request, "Enter proper date to book !")
+            return redirect(request.META.get('HTTP_REFERER'))
+        s = HotelBooking(hotel=hotel, user=request.user,
+                         start_date=checkin, end_date=checkout, booking_type="Prepaid")
         hotel = Hotel.objects.get(uid=uid)
+
+        total_booked = 0
+        if s.start_date > total_booked:
+            messages.warning(request, "Please select proper date")
+            return redirect(request.META.get('HTTP_REFERER'))
 
         if not check_booking(checkin, checkout, uid, hotel.room_count):
             messages.warning(
                 request, "Sorry, No room is available in between thsese dates!")
             return redirect(request.META.get('HTTP_REFERER'))
-        s = HotelBooking(
-            hotel=hotel, user=request.user, start_date=checkin, end_date=checkout, booking_type="Prepaid")
-        if s.start_date > s.end_date:
-            messages.warning(request, "Please select proper date")
-            return redirect(request.META.get('HTTP_REFERER'))
+
         s.save()
         messages.success(request, "Your booking has been completed")
         return redirect(request.META.get('HTTP_REFERER'))
